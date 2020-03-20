@@ -76,12 +76,12 @@ nnoremap <Leader>j :blast<CR>
 nnoremap <leader>w <C-w>v<C-w>l			    " Split window vertically and swap to new window
 
 " ------ Completion
-nnoremap <leader>w <C-w>v<C-w>l			    " Split window vertically and swap to new window
 inoremap <expr> <c-j> pumvisible() ? "\<c-n>" : "\<c-n>"
 inoremap <expr> <c-k> pumvisible() ? "\<c-p>" : "\<s-tab>"
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 set completeopt=menu,longest,preview
-set wildmenu
+
+set wildmenu					    " Command line completion
 "set wildmode=list:longest
 set wildmode=longest:full,full			    " First tab brings up options, second tab cycles
 
@@ -117,7 +117,8 @@ nnoremap <leader>pp :set nopaste<cr>
 nnoremap <leader>n :set number<cr>
 nnoremap <leader>nn :set nonumber<cr>
 
-nmap <silent> <leader>ev :e $MYVIMRC<CR>	    " Quickly edit/reload the vimrc file
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>	    
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " ============================ Plugins ============================ 
@@ -133,21 +134,44 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " File highlighting
-function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
- exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
- exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-endfunction
+" function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+"  exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+"  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+" endfunction
 
 " ++++++++++++++++ Airline
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_splits = 1
-"let g:airline#extensions#tabline#excludes = ["NERD_tree_1"]
+let g:airline#extensions#tabline#show_splits = 1		    " show buffers in split windows in tab line
+let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 1
+let g:airline_exclude_filenames = ['\c\vNERD_tree'] " match queries
+let g:airline#extensions#tabline#excludes = ['\c\vNERD_tree']
+"let g:airline#extensions#tabline#keymap_ignored_filetypes =
+			"\ ['vimfiler', 'nerdtree']
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " path formatting
-let g:airline#extensions#tabline#switch_buffers_and_tabs = 0 " for ctrlspace
+let g:airline#extensions#tabline#switch_buffers_and_tabs = 0	    " for ctrlspace
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'one'
 
+" Ignore patterns from buffer names (ignore Nerdtree!)
+let g:airline#extensions#tabline#ignore_bufadd_pat = '\c\vnerd_tree|undotree|vimfiler|tagbar|nerd_tree|NERD_tree'
+" let airline#extensions#tabline#disable_refresh = 1
 
+"let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerd_tree|undotree|vimfiler|NERD_tree'
+
+let g:airline#extensions#tabline#keymap_ignored_filetypes =
+        \ ['vimfiler', 'nerdtree']
+
+" Truncate / format long branch names
+" to truncate all path sections but the last one, e.g. a branch 'foo/bar/baz' becomes 'f/b/baz', use 2
+let g:airline#extensions#branch#format = 2
+
+" ---------- Theme
+"  +++ One Dark (see README.md)
+"  https://github.com/vim-airline/vim-airline/issues/710
+" call one#highlight('airline_c', 'cccccc', 'ff0000', 'underline')
+
+" Debug tabline filtering
+" nmap <leader><F5>  <Plug>XTablineToggleFiltering
 
 " ++++++++++++++++ Spaceline
 "let g:spaceline_seperate_style= 'arrow'
@@ -204,7 +228,7 @@ Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 "Plug 'reedes/vim-pencil'
 
 " ------ Themes
-Plug 'rakr/vim-one'
+Plug 'jgitgud/vim-one'
 Plug 'NLKNguyen/papercolor-theme'
 "Plug 'tomasiser/vim-code-dark'
 "Plug 'dracula/vim', { 'as': 'dracula' }
@@ -214,6 +238,7 @@ call plug#end()
 
 " ============================ Color ============================ 
 set background=dark " for the dark version of vim-one
+let g:one_allow_italics = 1 " I love italic for comments
 "colorscheme PaperColor
 colorscheme one
 " colorscheme  codedark
