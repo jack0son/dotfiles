@@ -1,0 +1,237 @@
+" Specify a directory for plugins " " - For Neovim: ~/.local/share/nvim/plugged
+" " - Avoid using standard Vim directory names like 'plugin'
+
+" ============================ Basics ============================
+set guifont=Hack\ Nerd\ Font\ Regular:h12	    " DevIcons
+set encoding=utf8
+set nocompatible
+set modelines=0
+set softtabstop=4
+set noexpandtab
+set smarttab
+set autoindent
+"set shiftwidth=0				    " indents use same distance as tab key (always match tabstop)
+
+inoremap jj <Esc>
+let mapleader = ","
+
+" Some Linux distributions set filetype in /etc/vimrc.
+" Clear filetype flags before changing runtimepath to force Vim to reload them.
+filetype off
+filetype plugin indent off
+set runtimepath+=$GOROOT/misc/vim
+filetype plugin indent on
+syntax on
+
+" Tab settings by language			    " @? Should this be done a different way?
+autocmd Filetype python setlocal ts=4 sts=4 sw=4
+autocmd Filetype cpp setlocal tabstop=4 shiftwidth=0 softtabstop=4
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype json setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype solidity setlocal ts=4 sts=4 sw=4
+autocmd Filetype go setlocal ts=4 sts=4 sw=4
+
+" ============================ Display ============================
+set laststatus=2				    " Always show status line
+set scrolloff=3
+"set smartindent " ? 
+set showmode
+set showcmd
+set hidden
+set visualbell
+set cursorline
+set ttyfast
+set ruler
+set backspace=indent,eol,start
+"set undofile " Use undo-tree
+set number
+"set relativenumber
+
+hi CursorLine cterm=none
+hi CursorLine gui=none
+
+" Handle long lines
+set wrap
+set textwidth=80
+set formatoptions=qrn1
+set colorcolumn=85
+
+" ============================ Navigation ============================
+" ------ Tab Pages
+nmap } gt
+nmap { gT
+nmap [ {
+nmap ] }
+
+" ------ Buffers
+set switchbuf=usetab,newtab
+nnoremap <Leader>b :ls<CR>:b<Space>
+nnoremap <Leader>h :bprevious<CR>
+nnoremap <Leader>l :bnext<CR>
+nnoremap <Leader>k :bfirst<CR>
+nnoremap <Leader>j :blast<CR>
+
+" ------ Windows
+nnoremap <leader>w <C-w>v<C-w>l			    " Split window vertically and swap to new window
+
+" ------ Completion
+nnoremap <leader>w <C-w>v<C-w>l			    " Split window vertically and swap to new window
+inoremap <expr> <c-j> pumvisible() ? "\<c-n>" : "\<c-n>"
+inoremap <expr> <c-k> pumvisible() ? "\<c-p>" : "\<s-tab>"
+inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
+set completeopt=menu,longest,preview
+set wildmenu
+"set wildmode=list:longest
+set wildmode=longest:full,full			    " First tab brings up options, second tab cycles
+
+" ------ Search
+nnoremap / /\v
+vnoremap / /\v
+set ignorecase
+set smartcase
+set gdefault 
+set incsearch 
+set hlsearch
+set showmatch 
+nnoremap <leader><space> :noh<cr>
+nnoremap <tab> %
+vnoremap <tab> %
+nnoremap <leader>v v`]				    " select just pasted text
+
+vnoremap <silent> * :<C-U>			    " Search for selected text, forwards or backwards.
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R>=&ic?'\c':'\C'<CR><C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gVzv:call setreg('"', old_reg, old_regtype)<CR>
+
+" ------ Pairs
+nnoremap <leader>p :set paste<cr>
+nnoremap <leader>pp :set nopaste<cr>
+
+nnoremap <leader>n :set number<cr>
+nnoremap <leader>nn :set nonumber<cr>
+
+nmap <silent> <leader>ev :e $MYVIMRC<CR>	    " Quickly edit/reload the vimrc file
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" ============================ Plugins ============================ 
+" ++++++++++++++++ Async Complete (-) 
+" let g:asyncomplete_auto_popup = 1
+" imap <C-space> <Plug>(asyncomplete_force_refresh)
+" refresh the completion list
+
+" ++++++++++++++++ Nerd Tree
+map <C-n> :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+" ++++++++++++++++ Airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_splits = 1
+"let g:airline#extensions#tabline#excludes = ["NERD_tree_1"]
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " path formatting
+let g:airline#extensions#tabline#switch_buffers_and_tabs = 0 " for ctrlspace
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'one'
+
+
+
+" ++++++++++++++++ Spaceline
+"let g:spaceline_seperate_style= 'arrow'
+"let g:spaceline_colorscheme = 'space'
+"let g:spaceline_seperate_mode = 1
+
+" ++++++++++++++++ DevIcons
+if exists("g:loaded_webdevicons")
+  call webdevicons#refresh()
+endif
+set conceallevel=3
+
+" ++++++++++++++++ Plugged
+" Automatically install plugged
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+" ------ Status
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"Plug 'taigacute/spaceline.vim'
+
+" Status
+" ------ Workflow
+Plug 'scrooloose/nerdtree'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+
+" ------ Utils
+Plug 'tpope/vim-surround' 
+Plug 'tpope/vim-repeat' 
+Plug 'tpope/vim-fugitive' 
+
+" ------ Linting and Completion
+"Plug 'w0rp/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" ------ Syntax
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx']}
+Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+"Plug 'tovarishfin/vim-solidity'
+"Plug 'rust-lang/rust.vim'
+"Plug 'prabirshrestha/async.vim'
+"Plug 'prabirshrestha/vim-lsp'
+"Plug 'prabirshrestha/asyncomplete.vim'
+"Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"Plug 'bfrg/vim-cpp-modern'
+"Plug 'lervag/vimtex'
+"Plug 'reedes/vim-pencil'
+
+" ------ Themes
+Plug 'rakr/vim-one'
+Plug 'NLKNguyen/papercolor-theme'
+"Plug 'tomasiser/vim-code-dark'
+"Plug 'dracula/vim', { 'as': 'dracula' }
+"Plug 'tomasr/molokai'
+Plug 'ryanoasis/vim-devicons' " always load last
+call plug#end()
+
+" ============================ Color ============================ 
+set background=dark " for the dark version of vim-one
+"colorscheme PaperColor
+colorscheme one
+" colorscheme  codedark
+" color dracula
+
+"Credit joshdick
+"Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
+"If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
+"(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
+if (empty($TMUX))
+  if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
