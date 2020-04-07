@@ -1,3 +1,8 @@
+# -- Project shortcuts --
+alias tprov='cd ~/Repositories/bitbucket'
+alias tprov-dev='cd ~/Repositories/tprov-dev'
+alias iot='cd ~/Repositories/bitbucket/iot-server'
+
 # Alias management
 alias valias='vim ~/.bash_aliases'
 alias salias='source ~/.bash_aliases'
@@ -5,6 +10,7 @@ alias vash='vim ~/.bashrc'
 
 # -- disk usage --
 alias dummy='ncudu'
+alias duh='du -h'
 
 # Directory aliases
 alias dt='cd ~/Desktop'
@@ -34,28 +40,23 @@ alias bhg='cat ~/.bash_history | grep'
 
 # My shell tools
 alias ll='lsd -l'
+alias tmux='tmux -2'
 
-#
+# Python
 alias python='python3'
 alias pip='pip3'
-alias duh='du -h'
-alias tmux='tmux -2'
 
 # Packages
 alias upgrade='sudo apt update -y && sudo apt upgrade -y'
 
 # Docker
 alias dcls='docker container ls'
+alias dcs='docker container stop'
 alias dl='docker logs --follow'
 alias docker-enter='docker-compose run --rm --service-ports app /bin/bash'
 alias docker-enter-again='docker-compose run --rm app /bin/bash'
 alias docker-clean-images='sudo docker rmi $(sudo docker images -a --filter=dangling=true -q)'
 alias docker-clean-ps='sudo docker rm $(sudo docker ps --filter=status=exited --filter=status=created -q)'
-
-# -- project shortcuts --
-alias tprov='cd ~/Repositories/bitbucket'
-alias tprov-dev='cd ~/Repositories/tprov-dev'
-alias iot='cd ~/Repositories/bitbucket/iot-server'
 
 # Rust
 #alias rustc='rust.rustc'
@@ -71,10 +72,15 @@ alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
 # Vim
 alias lswp='ls .*.*.sw*'
 alias rmswp='rm .*.*.sw*' 
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
 
 # Git 
 alias gs='git status'
 alias lastcommit='git log --name-status HEAD^..HEAD'
+alias gls="git log --pretty=format:\"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]\" --decorate"
+alias gll="git log --pretty=format:\"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]\" --decorate --numstat"
 alias glc='lastcommit'
 alias gitbnr='git symbolic-ref -q HEAD'  # with ref
 alias gitbn='git rev-parse --abbrev-ref HEAD'  
@@ -95,4 +101,5 @@ alias truffle-local="./node_modules/.bin/truffle"
 alias ganache-local="./node_modules/.bin/ganache-cli"
 alias wpscan='sudo docker run -it --rm wpscanteam/wpscan'
 alias fuck='sudo $(history -p \!\!)'
+
 
