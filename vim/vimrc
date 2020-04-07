@@ -117,6 +117,8 @@ nnoremap <leader>pp :set nopaste<cr>
 nnoremap <leader>n :set number<cr>
 nnoremap <leader>nn :set nonumber<cr>
 
+" nnoremap <leader>d :=&diff ? "diffoff" : "diffthis"<CR><CR>
+
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>	    
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
@@ -127,19 +129,17 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " imap <C-space> <Plug>(asyncomplete_force_refresh)
 " refresh the completion list
 
+" ++++++++++++++++ Vimify (Spotify)
+let g:spotify_token='M2MyZjg5NzUyYmRlNGU4NGEzZWQzZGY3MWZlODllYjMK'
+
 " ++++++++++++++++ Nerd Tree
 map <C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" File highlighting
-" function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-"  exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-"  exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-" endfunction
-
 " ++++++++++++++++ Airline
+let g:airline_theme = 'one'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1		    " show buffers in split windows in tab line
 let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 1
@@ -150,8 +150,8 @@ let g:airline#extensions#tabline#excludes = ['\c\vNERD_tree']
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " path formatting
 let g:airline#extensions#tabline#switch_buffers_and_tabs = 0	    " for ctrlspace
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'one'
 
+" @fix
 " Ignore patterns from buffer names (ignore Nerdtree!)
 let g:airline#extensions#tabline#ignore_bufadd_pat = '\c\vnerd_tree|undotree|vimfiler|tagbar|nerd_tree|NERD_tree'
 " let airline#extensions#tabline#disable_refresh = 1
@@ -163,7 +163,10 @@ let g:airline#extensions#tabline#keymap_ignored_filetypes =
 
 " Truncate / format long branch names
 " to truncate all path sections but the last one, e.g. a branch 'foo/bar/baz' becomes 'f/b/baz', use 2
+  let g:airline#extensions#branch#displayed_head_limit = 16
+let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#format = 2
+let g:airline#extensions#branch#empty_message = 'NO GIT'
 
 " ---------- Theme
 "  +++ One Dark (see README.md)
@@ -227,8 +230,12 @@ Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 "Plug 'lervag/vimtex'
 "Plug 'reedes/vim-pencil'
 
+"------- Misc
+"Plug 'HendrikPetertje/vimify'
+
 " ------ Themes
 Plug 'jgitgud/vim-one'
+" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'NLKNguyen/papercolor-theme'
 "Plug 'tomasiser/vim-code-dark'
 "Plug 'dracula/vim', { 'as': 'dracula' }
@@ -237,14 +244,14 @@ Plug 'ryanoasis/vim-devicons' " always load last
 call plug#end()
 
 " ============================ Color ============================ 
-set background=dark " for the dark version of vim-one
-let g:one_allow_italics = 1 " I love italic for comments
+set background=dark 
+let g:one_allow_italics = 1			    " Italic for comments
 "colorscheme PaperColor
 colorscheme one
 " colorscheme  codedark
 " color dracula
 
-"Credit joshdick
+" ------ Color Fix
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
 "(see < http://sunaku.github.io/tmux-24bit-color.html#usage > for more information.)
