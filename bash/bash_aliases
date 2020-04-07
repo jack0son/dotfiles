@@ -1,0 +1,98 @@
+# Alias management
+alias valias='vim ~/.bash_aliases'
+alias salias='source ~/.bash_aliases'
+alias vash='vim ~/.bashrc'
+
+# -- disk usage --
+alias dummy='ncudu'
+
+# Directory aliases
+alias dt='cd ~/Desktop'
+alias dl='cd ~/Downloads'
+alias gosrc='cd ~/go/src/github.com/jgitgud'
+alias repos='cd ~/Repositories'
+alias xfce4-config='cd ~/.config/xfce4/xfconf/xfce-perchannel-xml'
+# Jump back n directories at a time
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+alias ......='cd ../../../../../'
+
+# Shell Tools
+alias rm='rm -vI'
+alias tll='tree -L 1'
+alias tl='tree -L 2'
+alias lt='ll --sort=time'
+alias copy='xclip -sel clip'
+alias diff="colordiff"
+alias grepc='grep --color=always'
+alias grepn='grep -rn --exclude-dir={node_modules,build} --exclude={"*.json",".*.*.swp*"}'
+alias sdn='sudo shutdown now'
+alias bh='cat ~/.bash_history'
+alias bhg='cat ~/.bash_history | grep'
+
+# My shell tools
+alias ll='lsd -l'
+
+#
+alias python='python3'
+alias pip='pip3'
+alias duh='du -h'
+alias tmux='tmux -2'
+
+# Packages
+alias upgrade='sudo apt update -y && sudo apt upgrade -y'
+
+# Docker
+alias dcls='docker container ls'
+alias dl='docker logs --follow'
+alias docker-enter='docker-compose run --rm --service-ports app /bin/bash'
+alias docker-enter-again='docker-compose run --rm app /bin/bash'
+alias docker-clean-images='sudo docker rmi $(sudo docker images -a --filter=dangling=true -q)'
+alias docker-clean-ps='sudo docker rm $(sudo docker ps --filter=status=exited --filter=status=created -q)'
+
+# -- project shortcuts --
+alias tprov='cd ~/Repositories/bitbucket'
+alias tprov-dev='cd ~/Repositories/tprov-dev'
+alias iot='cd ~/Repositories/bitbucket/iot-server'
+
+# Rust
+#alias rustc='rust.rustc'
+#alias cargo='rust.cargo'
+
+# Networking
+alias lsof-netproc='lsof -Pan -i'
+#alias lsofnet='lsof -Pan -p PID -i'
+alias pg='ping google.com'
+alias netman-restart='sudo systemctl restart NetworkManager'
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# Vim
+alias lswp='ls .*.*.sw*'
+alias rmswp='rm .*.*.sw*' 
+
+# Git 
+alias gs='git status'
+alias lastcommit='git log --name-status HEAD^..HEAD'
+alias glc='lastcommit'
+alias gitbnr='git symbolic-ref -q HEAD'  # with ref
+alias gitbn='git rev-parse --abbrev-ref HEAD'  
+alias gittf='git ls-tree -r $(gitbn) --name-only'
+alias branchbydate='git for-each-ref --sort=committerdate refs/heads/ --format="%(committerdate:short) %(refname)"'
+alias gbbd='gitbranchbydate'
+alias branchbydater='git branch -r --sort=committerdate --format="%(committerdate:short) %(refname)"'
+alias gbbdr='gitbranchbydater'
+alias trackallremote='git branch -r | grep -v "\->" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done'
+
+# Config
+alias trackpoint="sudo ~/scripts/trackpoint_settings.sh && sudo ~/scripts/mmb_paste-disable.sh"
+alias mmb="~/scripts/mmb_paste-disable.sh"
+alias myApps="apt search '~i!~M'"
+
+# Utils
+alias truffle-local="./node_modules/.bin/truffle"
+alias ganache-local="./node_modules/.bin/ganache-cli"
+alias wpscan='sudo docker run -it --rm wpscanteam/wpscan'
+alias fuck='sudo $(history -p \!\!)'
+
