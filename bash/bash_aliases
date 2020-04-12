@@ -1,7 +1,5 @@
 # -- Project shortcuts --
-alias tprov='cd ~/Repositories/bitbucket'
-alias tprov-dev='cd ~/Repositories/tprov-dev'
-alias iot='cd ~/Repositories/bitbucket/iot-server'
+alias woke='cd ~/Repositories/jgitgud/woke-dapp'
 
 # Alias management
 alias valias='vim ~/.bash_aliases'
