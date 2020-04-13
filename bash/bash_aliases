@@ -1,5 +1,7 @@
 # -- Project shortcuts --
 alias woke='cd ~/Repositories/jgitgud/woke-dapp'
+alias woke-app='cd ~/Repositories/jgitgud/woke-dapp/@woke/app'
+alias dotfiles='cd ~/Repositories/jgitgud/dotfiles'
 
 # Alias management
 alias valias='vim ~/.bash_aliases'
