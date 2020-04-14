@@ -63,6 +63,7 @@ nmap } gt
 nmap { gT
 nmap [ {
 nmap ] }
+nmap <c-w>p :vertical wincmd f<CR>	    " open file under cursor in vert split
 
 " ------ Buffers
 set switchbuf=usetab,newtab
