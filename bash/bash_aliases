@@ -3,6 +3,11 @@ alias woke='cd ~/Repositories/jgitgud/woke-dapp'
 alias woke-app='cd ~/Repositories/jgitgud/woke-dapp/@woke/app'
 alias dotfiles='cd ~/Repositories/jgitgud/dotfiles'
 
+# Instances
+alias woke-services-1='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-1'
+alias woke-services-2='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-2'
+alias woke-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
+
 # Alias management
 alias valias='vim ~/.bash_aliases'
 alias salias='source ~/.bash_aliases'
@@ -17,6 +22,7 @@ alias dt='cd ~/Desktop'
 alias dl='cd ~/Downloads'
 alias gosrc='cd ~/go/src/github.com/jgitgud'
 alias repos='cd ~/Repositories'
+alias github='cd ~/Repositories/jgitgud'
 alias xfce4-config='cd ~/.config/xfce4/xfconf/xfce-perchannel-xml'
 # Jump back n directories at a time
 alias ..='cd ..'

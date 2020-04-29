@@ -223,8 +223,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx']}
 Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'tovarishfin/vim-solidity'
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-"Plug 'tovarishfin/vim-solidity'
 "Plug 'rust-lang/rust.vim'
 "Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/vim-lsp'
