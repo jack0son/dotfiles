@@ -6,7 +6,7 @@ add-apt-repository -y ppa:jonathonf/vim
 apt install -y neovim vim
 
 # Shell tools
-apt install -y git htop curl tmux  colordiff xclip
+apt install -y git htop curl tmux  colordiff xclip tree nmap
 
 # Shell
 apt install -y zsh && chsh -s $(which zsh)

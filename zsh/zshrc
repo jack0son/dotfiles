@@ -149,6 +149,8 @@ fi
 RPS1='$(vi_mode_prompt_info)'
 RPS2=$RPS1
 
+autocrlf=false
+
 # New line at end of prompt
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then

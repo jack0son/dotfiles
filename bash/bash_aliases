@@ -3,10 +3,20 @@ alias woke='cd ~/Repositories/jgitgud/woke-dapp'
 alias woke-app='cd ~/Repositories/jgitgud/woke-dapp/@woke/app'
 alias dotfiles='cd ~/Repositories/jgitgud/dotfiles'
 
+# Woke Network
+alias wcli-dev='DEBUG=* NODE_ENV=development ETH_ENV=development npm run cli'
+alias wcli='ETH_ENV=goerli_infura NODE_ENV=production npm run cli'
+
 # Instances
-alias woke-services-1='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-1'
-alias woke-services-2='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-2'
-alias woke-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
+alias ssh:woke-services-1='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-1'
+alias ssh:woke-services-2='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-2'
+alias ssh:woke-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
+alias ssh:woke-goerli-2='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-2'
+
+# Geth
+alias pull-geth='docker pull ethereum/client-go:latest'
+alias goerli-start='docker rm $(docker ps -aq --filter name=goerli); docker run --name goerli -d -p 8545:8545 -p 30303:30303 -v ~/.ethereum:/root/.ethereum ethereum/client-go --goerli --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi personal,eth,net,web3b'
+alias goerli-attach='docker run -it -v ~/.ethereum:/root/.ethereum ethereum/client-go attach ipc:///root/.ethereum/goerli/geth.ipc'
 
 # Alias management
 alias valias='vim ~/.bash_aliases'
@@ -35,7 +45,8 @@ alias ......='cd ../../../../../'
 alias rm='rm -vI'
 alias tll='tree -L 1'
 alias tl='tree -L 2'
-alias lt='ll --sort=time'
+alias lt='ls -l --sort=time'
+alias lst='lsd -lt'
 alias copy='xclip -sel clip'
 alias diff="colordiff"
 alias grepc='grep --color=always'
