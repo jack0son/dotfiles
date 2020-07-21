@@ -10,13 +10,20 @@ alias wcli='ETH_ENV=goerli_infura NODE_ENV=production npm run cli'
 # Instances
 alias ssh:woke-services-1='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-1'
 alias ssh:woke-services-2='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-2'
-alias ssh:woke-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
-alias ssh:woke-goerli-2='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-2'
+alias ssh:geth-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
+alias ssh:geth-goerli-2='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-2'
+alias ssh:geth-goerli-3='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-3'
 
 # Geth
 alias pull-geth='docker pull ethereum/client-go:latest'
 alias goerli-start='docker rm $(docker ps -aq --filter name=goerli); docker run --name goerli -d -p 8545:8545 -p 30303:30303 -v ~/.ethereum:/root/.ethereum ethereum/client-go --goerli --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi personal,eth,net,web3b'
 alias goerli-attach='docker run -it -v ~/.ethereum:/root/.ethereum ethereum/client-go attach ipc:///root/.ethereum/goerli/geth.ipc'
+
+# Replace with fstab config
+alias mnt:freenas='sudo mount -v -t cifs -o username=jackson,workgroup=WORKGROUP,ip=192.168.1.161 //freenas.local/windows-media ./freenas/windows-media'
+
+# KDE Plasma
+alias plasma-reboot='kquitapp5 plasmashell && kstart5 plasmashell'
 
 # Alias management
 alias valias='vim ~/.bash_aliases'

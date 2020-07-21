@@ -46,7 +46,7 @@ set ruler
 set backspace=indent,eol,start
 "set undofile " Use undo-tree
 set number
-"set relativenumber
+set relativenumber
 
 hi CursorLine cterm=none
 hi CursorLine gui=none
@@ -115,14 +115,19 @@ vnoremap <silent> # :<C-U>
 nnoremap <leader>p :set paste<cr>
 nnoremap <leader>pp :set nopaste<cr>
 
+
 nnoremap <leader>n :set number<cr>
 nnoremap <leader>nn :set nonumber<cr>
+nnoremap <leader>nr :set rnu!<cr>
+nnoremap <leader>nrr :set rnu<cr>
 
 " nnoremap <leader>d :=&diff ? "diffoff" : "diffthis"<CR><CR>
 
 " Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>	    
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+" nmap <silent> <leader>ev :e $MYVIMRC<CR>	    
+" nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader>ev :e ~/.vimrc<CR>	    
+nmap <silent> <leader>sv :so ~/.vimrc<CR>
 
 " ============================ Plugins ============================ 
 " ++++++++++++++++ Async Complete (-) 
@@ -142,9 +147,16 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " ++++++++++++++++ Ctrl Space
 nnoremap <c-space> :CtrlSpace<CR>
 
+" ++++++++++++++++ coc.nvim
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
+
+" ++++++++++++++++ fzf
+
+
 " ++++++++++++++++ Airline
 let g:airline_theme = 'one'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#show_splits = 1		    " show buffers in split windows in tab line
 let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 1
 let g:airline_exclude_filenames = ['\c\vNERD_tree'] " match queries
