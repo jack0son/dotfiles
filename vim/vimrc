@@ -41,11 +41,11 @@ autocmd FileType gitcommit setlocal complete+=kspell
 
 " ============================ Formatting ============================
 " Re-wrap paragraphs after leaving insert mode
-augroup mdFormatting
-    autocmd!
-    autocmd InsertLeave *.md normal gwap<CR>
-augroup END
-nnoremap <Leader>c gwap<CR>
+" augroup mdFormatting
+"     autocmd!
+"     autocmd InsertLeave *.md normal gwap<CR>
+" augroup END
+" nnoremap <Leader>c gwap<CR>
 
 " ============================ Display ============================
 set laststatus=2				    " Always show status line

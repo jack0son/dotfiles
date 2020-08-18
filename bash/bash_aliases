@@ -5,14 +5,15 @@ alias dotfiles='cd ~/Repositories/jgitgud/dotfiles'
 
 # Woke Network
 alias wcli-dev='DEBUG=* NODE_ENV=development ETH_ENV=development npm run cli'
-alias wcli='ETH_ENV=goerli_infura NODE_ENV=production npm run cli'
+alias wcli-local='ETH_ENV=goerli_infura NODE_ENV=production npm run cli'
+alias wcli='ETH_ENV=goerli_infura NODE_ENV=production npm run --prefix /home/jack/Repositories/jgitgud/woke-dapp/@woke/cli cli'
 
 # Instances
 alias ssh:woke-services-1='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-1'
 alias ssh:woke-services-2='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-2'
 alias ssh:geth-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
 alias ssh:geth-goerli-2='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-2'
-alias ssh:geth-goerli-3='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-3'
+alias ssh:geth-goerli-3='gcloud compute ssh --project woke-network-services --zone us-west2-b geth-goerli-3'
 
 # Geth
 alias pull-geth='docker pull ethereum/client-go:latest'
