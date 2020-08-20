@@ -15,4 +15,4 @@ apt install -y zsh && chsh -s $(which zsh)
 apt install -y build-essential
 
 # Desktop
-apt install -y tilix dconf-cli
+apt install -y tilix dconf-cli meld

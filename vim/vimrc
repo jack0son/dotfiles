@@ -179,26 +179,29 @@ nmap <leader>f  <Plug>(coc-format-selected)
 
 " ++++++++++++++++ Airline
 let g:airline_theme = 'one'
-let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#nerdtree_status = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1		    " show buffers in split windows in tab line
 let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 1
-let g:airline_exclude_filenames = ['\c\vNERD_tree'] " match queries
-let g:airline#extensions#tabline#excludes = ['\c\vNERD_tree']
+"let g:airline_exclude_filenames = ['\c\vNERD_tree',"NERD_TREE*"] " match queries
+let g:airline#extensions#tabline#excludes = ['\c\vNERD_tree', 'NERD_TREE', 'NERD_TREE_*', 'tmp.js']
 "let g:airline#extensions#tabline#keymap_ignored_filetypes =
 			"\ ['vimfiler', 'nerdtree']
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " path formatting
-let g:airline#extensions#tabline#switch_buffers_and_tabs = 0	    " for ctrlspace
+"let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " path formatting
+"let g:airline#extensions#tabline#switch_buffers_and_tabs = 0	    " for ctrlspace
 let g:airline_powerline_fonts = 1
 
 " @fix
 " Ignore patterns from buffer names (ignore Nerdtree!)
-let g:airline#extensions#tabline#ignore_bufadd_pat = '\c\vnerd_tree|undotree|vimfiler|tagbar|nerd_tree|NERD_tree'
+"let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerd_tree|undotree|vimfiler|tagbar|NERD_tree'
 " let airline#extensions#tabline#disable_refresh = 1
 
 "let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerd_tree|undotree|vimfiler|NERD_tree'
 
-let g:airline#extensions#tabline#keymap_ignored_filetypes =
-        \ ['vimfiler', 'nerdtree']
+"let g:airline#extensions#tabline#keymap_ignored_filetypes =
+        \ ['vimfiler', 'nerdtree', 'qf', 'vim-plug', 'help', 'diff', 'man', 'fugitive', 'nerdtree', 'tagbar', 'codi']
+
 
 " Truncate / format long branch names
 " to truncate all path sections but the last one, e.g. a branch 'foo/bar/baz' becomes 'f/b/baz', use 2
@@ -243,6 +246,7 @@ Plug 'vim-airline/vim-airline-themes'
 " Status
 " ------ Workflow
 Plug 'scrooloose/nerdtree'
+Plug 'gcmt/taboo.vim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
 " ------ Utils
