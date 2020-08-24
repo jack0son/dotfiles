@@ -21,7 +21,22 @@ filetype off
 filetype plugin indent off
 set runtimepath+=$GOROOT/misc/vim
 filetype plugin indent on
-syntax on
+syntax on 
+" Syntax
+function! SynGroup()                                                            
+    let l:s = synID(line('.'), col('.'), 1)                                       
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+map gm :call SynGroup()<CR>
+
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+let g:vim_jsx_pretty_colorful_config = 1
 
 " Tab settings by language			    " @? Should this be done a different way?
 autocmd Filetype python setlocal ts=4 sts=4 sw=4
@@ -149,10 +164,9 @@ nmap <silent> <leader>ev :e ~/.vimrc<CR>
 nmap <silent> <leader>sv :so ~/.vimrc<CR>
 
 " ============================ Plugins ============================ 
-" ++++++++++++++++ Async Complete (-) 
-" let g:asyncomplete_auto_popup = 1
-" imap <C-space> <Plug>(asyncomplete_force_refresh)
-" refresh the completion list
+" ++++++++++++++++ vim-javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
 
 " ++++++++++++++++ Vimify (Spotify)
 let g:spotify_token='M2MyZjg5NzUyYmRlNGU4NGEzZWQzZGY3MWZlODllYjMK'
@@ -162,6 +176,7 @@ map <C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeGitStatusUseNerdFonts = 1
 
 " ++++++++++++++++ Ctrl Space
 nnoremap <c-space> :CtrlSpace<CR>
@@ -245,11 +260,15 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Status
 " ------ Workflow
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree' |
+			\Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'gcmt/taboo.vim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
-" ------ Utils
+" ------  Utilities
+Plug 'iamcco/markdown-preview.nvim'
+
+" ------ Text Manipulation
 Plug 'tpope/vim-surround' 
 Plug 'tpope/vim-repeat' 
 Plug 'tpope/vim-fugitive' 
@@ -260,18 +279,24 @@ Plug 'kkoomen/vim-doge'
 " ------ Linting and Completion
 "Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'norcalli/nvim-colorizer.lua'
 " :CocInstall coc-json
 
 " ------ Syntax
-Plug 'leafgarland/typescript-vim'
-Plug 'kevinoid/vim-jsonc'
-Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx']}
-Plug 'MaxMEllon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'tovarishfin/vim-solidity'
+Plug 'pangloss/vim-javascript'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'MaxMEllon/vim-jsx-pretty'
+" Plug 'yuezk/vim-js'
+
+" Plug 'kevinoid/vim-jsonc'
+" Plug 'moll/vim-node', {'for': ['javascript', 'javascriptreact', 'javascript.jsx']}
+" Plug 'leafgarland/typescript-vim', {'for': ['javascript', 'javascriptreact', 'javascript.jsx']}
+" Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascriptreact', 'javascript.jsx']}
+" Plug 'tovarishfin/vim-solidity'
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 "Plug 'rust-lang/rust.vim'
 "Plug 'prabirshrestha/async.vim'
-"Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/vim-lsp'
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "Plug 'bfrg/vim-cpp-modern'
@@ -285,6 +310,7 @@ Plug 'tovarishfin/vim-solidity'
 Plug 'jgitgud/vim-one'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'mhartington/oceanic-next'
 "Plug 'tomasiser/vim-code-dark'
 "Plug 'dracula/vim', { 'as': 'dracula' }
 "Plug 'tomasr/molokai'
@@ -293,8 +319,7 @@ call plug#end()
 
 " ============================ Color ============================ 
 set background=dark 
-let g:one_allow_italics = 1			    " Italic for comments
-"colorscheme PaperColor
+let g:one_allow_italics = 1			    " Italic for comments "colorscheme PaperColor
 colorscheme one
 " colorscheme  codedark
 " color dracula
@@ -315,3 +340,22 @@ if (empty($TMUX))
     set termguicolors
   endif
 endif
+
+" Must come after set termguicolors
+lua require'colorizer'.setup()
+
+
+" lua require 'colorizer'.setup {
+"   css = { rgb_fn = true; };
+"   scss = { rgb_fn = true; };
+"   sass = { rgb_fn = true; };
+"   stylus = { rgb_fn = true; };
+"   vim = { names = false; };
+"   'javascript';
+"   'javascriptreact';
+"   'typescript';
+"   'typescriptreact';
+"   html = {
+"     mode = 'foreground';
+"   }
+" }
