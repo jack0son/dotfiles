@@ -134,6 +134,7 @@ set smartcase
 set gdefault 
 set incsearch 
 set hlsearch
+set inccommand=nosplit
 set showmatch 
 nnoremap <leader><space> :noh<cr>
 nnoremap <tab> %
@@ -188,6 +189,9 @@ let g:NERDTreeGitStatusUseNerdFonts = 1
 " ++++++++++++++++ Ctrl Space
 nnoremap <c-space> :CtrlSpace<CR>
 
+" ++++++++++++++++ Buffer Bye Bye
+:nnoremap <Leader>q :Bdelete<CR>
+
 " ++++++++++++++++ coc.nvim
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
@@ -205,7 +209,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_splits = 1		    " show buffers in split windows in tab line
 let g:airline#extensions#tabline#ctrlspace_show_tab_nr = 1
 "let g:airline_exclude_filenames = ['\c\vNERD_tree',"NERD_TREE*"] " match queries
-let g:airline#extensions#tabline#excludes = ['\c\vNERD_tree', 'NERD_TREE', 'NERD_TREE_*', 'tmp.js']
+let g:airline#extensions#tabline#excludes = ['\c\vNERD_tree', 'NERD_tree_*', 'NERD_TREE', 'NERD_TREE_*', 'tmp.js']
 "let g:airline#extensions#tabline#keymap_ignored_filetypes =
 			"\ ['vimfiler', 'nerdtree']
 "let g:airline#extensions#tabline#formatter = 'unique_tail_improved' " path formatting
@@ -249,6 +253,9 @@ if exists("g:loaded_webdevicons")
 endif
 set conceallevel=3
 
+" ++++++++++++++++ Suda
+let g:suda_smart_edit = 1 " Automatically open write protected files using suda
+
 " ++++++++++++++++ Plugged
 " Automatically install plugged
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -269,9 +276,11 @@ Plug 'scrooloose/nerdtree' |
 			\Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'gcmt/taboo.vim'
 Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'moll/vim-bbye'
 
 " ------  Utilities
-Plug 'iamcco/markdown-preview.nvim'
+Plug 'lambalisue/suda'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " ------ Text Manipulation
 Plug 'tpope/vim-surround' 
@@ -284,24 +293,26 @@ Plug 'kkoomen/vim-doge'
 " ------ Linting and Completion
 "Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'norcalli/nvim-colorizer.lua'
 " :CocInstall coc-json
+" :CocInstall coc-tsserver
 
 " ------ Syntax
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
 " Plug 'yuezk/vim-js'
 
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'tovarishfin/vim-solidity'
+Plug 'prabirshrestha/vim-lsp'
+
 " Plug 'kevinoid/vim-jsonc'
 " Plug 'moll/vim-node', {'for': ['javascript', 'javascriptreact', 'javascript.jsx']}
 " Plug 'leafgarland/typescript-vim', {'for': ['javascript', 'javascriptreact', 'javascript.jsx']}
 " Plug 'pangloss/vim-javascript', {'for': ['javascript', 'javascriptreact', 'javascript.jsx']}
-" Plug 'tovarishfin/vim-solidity'
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-"Plug 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim'
 "Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
 "Plug 'prabirshrestha/asyncomplete.vim'
 "Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "Plug 'bfrg/vim-cpp-modern'
@@ -312,6 +323,7 @@ Plug 'prabirshrestha/vim-lsp'
 "Plug 'HendrikPetertje/vimify'
 
 " ------ Themes
+" Plug 'rakr/vim-one'
 Plug 'jgitgud/vim-one'
 " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'NLKNguyen/papercolor-theme'
@@ -348,19 +360,3 @@ endif
 
 " Must come after set termguicolors
 lua require'colorizer'.setup()
-
-
-" lua require 'colorizer'.setup {
-"   css = { rgb_fn = true; };
-"   scss = { rgb_fn = true; };
-"   sass = { rgb_fn = true; };
-"   stylus = { rgb_fn = true; };
-"   vim = { names = false; };
-"   'javascript';
-"   'javascriptreact';
-"   'typescript';
-"   'typescriptreact';
-"   html = {
-"     mode = 'foreground';
-"   }
-" }

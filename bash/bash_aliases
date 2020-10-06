@@ -1,12 +1,13 @@
 # -- Project shortcuts --
-alias woke='cd ~/Repositories/jgitgud/woke-dapp'
-alias woke-app='cd ~/Repositories/jgitgud/woke-dapp/@woke/app'
-alias dotfiles='cd ~/Repositories/jgitgud/dotfiles'
+alias woke='cd ~/Repositories/jack0son/woke-dapp'
+alias woke-app='cd ~/Repositories/jack0son/woke-dapp/@woke/app'
+alias contracts='cd ~/Repositories/jack0son/woke-dapp/@woke/contracts-src'
+alias dotfiles='cd ~/Repositories/jack0son/dotfiles'
 
 # Woke Network
 alias wcli-dev='DEBUG=* NODE_ENV=development ETH_ENV=development npm run cli'
 alias wcli-local='ETH_ENV=goerli_infura NODE_ENV=production npm run cli'
-alias wcli='ETH_ENV=goerli_infura NODE_ENV=production npm run --prefix /home/jack/Repositories/jgitgud/woke-dapp/@woke/cli cli'
+alias wcli='ETH_ENV=goerli_infura NODE_ENV=production npm run --prefix /home/jack/Repositories/jack0son/woke-dapp/@woke/cli cli'
 
 # Instances
 alias ssh:woke-services-1='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-1'
@@ -38,9 +39,11 @@ alias duh='du -h'
 # Directory aliases
 alias dt='cd ~/Desktop'
 alias dl='cd ~/Downloads'
-alias gosrc='cd ~/go/src/github.com/jgitgud'
+alias gosrc='cd ~/go/src/github.com/jack0son'
 alias repos='cd ~/Repositories'
-alias github='cd ~/Repositories/jgitgud'
+alias sandbox='cd ~/Repositories/sandbox'
+alias github='cd ~/Repositories/github'
+alias jack0son='cd ~/Repositories/jack0son'
 alias xfce4-config='cd ~/.config/xfce4/xfconf/xfce-perchannel-xml'
 # Jump back n directories at a time
 alias ..='cd ..'
@@ -111,10 +114,10 @@ alias glc='lastcommit'
 alias gitbnr='git symbolic-ref -q HEAD'  # with ref
 alias gitbn='git rev-parse --abbrev-ref HEAD'  
 alias gittf='git ls-tree -r $(gitbn) --name-only'
-alias branchbydate='git for-each-ref --sort=committerdate refs/heads/ --format="%(committerdate:short) %(refname)"'
-alias gbbd='gitbranchbydate'
-alias branchbydater='git branch -r --sort=committerdate --format="%(committerdate:short) %(refname)"'
-alias gbbdr='gitbranchbydater'
+alias gbranchbydate='git for-each-ref --sort=committerdate refs/heads/ --format="%(committerdate:short) %(refname)"'
+alias gbbd='gbranchbydate'
+alias gbranchbydater='git branch -r --sort=committerdate --format="%(committerdate:short) %(refname)"'
+alias gbbdr='gbranchbydater'
 alias trackallremote='git branch -r | grep -v "\->" | while read remote; do git branch --track "${remote#origin/}" "$remote"; done'
 
 # Config
