@@ -1,5 +1,11 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "typescript", "javascript"],
   "prettier.eslintIntegration": true,
-  "prettier.tslintIntegration": true
+  "prettier.tslintIntegration": true,
+  "markdownlint.config": {
+    "default": true,
+    "ul-style": {"style": "sublist" }
+  },
+  "git.enableGutters": true,
+  "tabnine.priority": 100
 }
