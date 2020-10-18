@@ -16,3 +16,6 @@ apt install -y build-essential
 
 # Desktop
 apt install -y tilix dconf-cli meld
+
+# Accessories
+apt install -y drawing

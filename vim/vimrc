@@ -48,6 +48,8 @@ nmap <silent> gh :echo 'hi<'.synIDattr(synID(line('.'), col('.'), 1), 'name')
 autocmd Filetype python setlocal ts=4 sts=4 sw=4
 autocmd Filetype cpp setlocal tabstop=4 shiftwidth=0 softtabstop=4
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype sh setlocal ts=2 sts=2 sw=2
+autocmd Filetype bash setlocal ts=2 sts=2 sw=2
 autocmd Filetype json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype solidity setlocal ts=4 sts=4 sw=4
@@ -194,6 +196,7 @@ nnoremap <c-space> :CtrlSpace<CR>
 
 " ++++++++++++++++ coc.nvim
 nmap <leader>gd <Plug>(coc-definition)
+silent! call repeat#set("\<Plug>(coc-definition)", v:count)
 nmap <leader>gr <Plug>(coc-references)
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 vmap <leader>f  <Plug>(coc-format-selected)
@@ -233,6 +236,26 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#format = 2
 let g:airline#extensions#branch#empty_message = 'NO GIT'
+
+
+" ++++++++++++++++ CoC
+let g:coc_global_extensions = [
+\ 'coc-tsserver'
+\ 'coc-sh'
+\ 'coc-tabnine'
+\ 'coc-prettier'
+\ 'coc-markdownlint'
+\ 'coc-json'
+\ 'coc-highlight'
+\ 'coc-go'
+\ 'coc-git'
+" \ 'coc-ultisnips',
+" \ 'coc-json',
+" \ 'coc-html',
+" \ 'coc-css',
+" \ 'coc-yaml',
+" \ 'coc-highlight',
+\ ]
 
 " ---------- Theme
 "  +++ One Dark (see README.md)
@@ -292,7 +315,7 @@ Plug 'kkoomen/vim-doge'
 
 " ------ Linting and Completion
 "Plug 'w0rp/ale'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release' , 'do': 'yarn install --frozen-lockfile'}
 " :CocInstall coc-json
 " :CocInstall coc-tsserver
 

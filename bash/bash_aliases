@@ -44,6 +44,7 @@ alias repos='cd ~/Repositories'
 alias sandbox='cd ~/Repositories/sandbox'
 alias github='cd ~/Repositories/github'
 alias jack0son='cd ~/Repositories/jack0son'
+alias notes='cd ~/Documents/notes'
 alias xfce4-config='cd ~/.config/xfce4/xfconf/xfce-perchannel-xml'
 # Jump back n directories at a time
 alias ..='cd ..'
@@ -130,5 +131,12 @@ alias truffle-local="./node_modules/.bin/truffle"
 alias ganache-local="./node_modules/.bin/ganache-cli"
 alias wpscan='sudo docker run -it --rm wpscanteam/wpscan'
 alias fuck='sudo $(history -p \!\!)'
+alias cpuf="grep -E '^model name|^cpu MHz' /proc/cpuinfo"
+alias stress='for j in `seq 1 4`; do dd if=/dev/zero of=/dev/null & done'
+alias stress-stop='killall dd'
+
+# Apps
+alias ncspot="RUST_BACKTRACE=1 ncspot"
+
 
 
