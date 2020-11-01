@@ -1,25 +1,37 @@
 # -- Project shortcuts --
-alias woke='cd ~/Repositories/jack0son/woke-dapp'
-alias woke-app='cd ~/Repositories/jack0son/woke-dapp/@woke/app'
+WOKE_DAPP="$HOME/Repositories/jack0son/woke-dapp"
+alias woke='cd $WOKE_DAPP'
+alias woke-app='cd $WOKE_DAPP/app'
+alias woke:build='$WOKE_DAPP/scripts/build.sh'
+alias woke:deploy='$WOKE_DAPP/scripts/deploy.sh'
+alias woke:migrate='$WOKE_DAPP/@woke/contracts-src/scripts/migrate.sh'
 alias contracts='cd ~/Repositories/jack0son/woke-dapp/@woke/contracts-src'
 alias dotfiles='cd ~/Repositories/jack0son/dotfiles'
 
 # Woke Network
 alias wcli-dev='DEBUG=* NODE_ENV=development ETH_ENV=development npm run cli'
 alias wcli-local='ETH_ENV=goerli_infura NODE_ENV=production npm run cli'
-alias wcli='ETH_ENV=goerli_infura NODE_ENV=production npm run --prefix /home/jack/Repositories/jack0son/woke-dapp/@woke/cli cli'
+alias wcli='ETH_ENV=production NODE_ENV=production npm run --prefix /home/jack/Repositories/jack0son/woke-dapp/@woke/cli start'
+alias dl-oracle='dl docker_oracle_1'
+alias dl-server='dl docker_server_1'
+alias dl-tipper='dl docker_tipper_1'
 
 # Instances
 alias ssh:woke-services-1='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-1'
 alias ssh:woke-services-2='gcloud compute ssh --project woke-network-services --zone us-west2-b woke-services-2'
-alias ssh:geth-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
+#alias ssh:geth-goerli-1='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-1'
+alias woke:geth-1-staging='ssh geth-goerli-1'
+alias woke:services-1-staging='ssh woke-services-staging-1'
 alias ssh:geth-goerli-2='gcloud compute ssh --project woke-network-services --zone us-west2-a geth-goerli-2'
 alias ssh:geth-goerli-3='gcloud compute ssh --project woke-network-services --zone us-west2-b geth-goerli-3'
 
 # Geth
+GETH_VOLUME_PATH="/home/jack/Mass/wd_blue-500/nodes/ethereum/goerli/.ethereum";
 alias pull-geth='docker pull ethereum/client-go:latest'
-alias goerli-start='docker rm $(docker ps -aq --filter name=goerli); docker run --name goerli -d -p 8545:8545 -p 30303:30303 -v ~/.ethereum:/root/.ethereum ethereum/client-go --goerli --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi personal,eth,net,web3b'
-alias goerli-attach='docker run -it -v ~/.ethereum:/root/.ethereum ethereum/client-go attach ipc:///root/.ethereum/goerli/geth.ipc'
+alias goerli-start='docker rm $(docker ps -aq --filter name=goerli); docker run --name goerli -d -p 8545:8545 -p 30303:30303 -p 8546:8546 -v ${GETH_VOLUME_PATH}:/root/.ethereum ethereum/client-go --goerli --ws --wsport 8546 --wsaddr 0.0.0.0 --wsorigins="*" --wsapi personal,eth,net,web3 --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi personal,eth,net,web3'
+alias goerli-start:rpc='docker rm $(docker ps -aq --filter name=goerli); docker run --name goerli -d -p 8545:8545 -p 30303:30303  -v ${GETH_VOLUME_PATH}:/root/.ethereum ethereum/client-go --goerli --rpc --rpcport 8545 --rpcaddr "0.0.0.0" --rpccorsdomain "*" --rpcapi personal,eth,net,web3'
+alias goerli-start:ws='docker rm $(docker ps -aq --filter name=goerli); docker run --name goerli -d -p 30303:30303 -p 8546:8546 -v ${GETH_VOLUME_PATH}:/root/.ethereum ethereum/client-go --goerli --ws --wsport 8546 --wsaddr 0.0.0.0 --wsorigins="*" --wsapi personal,eth,net,web3'
+alias goerli-attach='docker run -it -v ${GETH_VOLUME_PATH}:/root/.ethereum ethereum/client-go attach ipc:///root/.ethereum/goerli/geth.ipc'
 
 # Replace with fstab config
 alias mnt:freenas='sudo mount -v -t cifs -o username=jackson,workgroup=WORKGROUP,ip=192.168.1.161 //freenas.local/windows-media ./freenas/windows-media'
@@ -55,8 +67,8 @@ alias ......='cd ../../../../../'
 
 # Shell Tools
 alias rm='rm -Iv'
-alias tll='tree -L 1'
-alias tl='tree -L 2'
+alias tl='tree -L 1'
+alias tll='tree -L 2'
 alias lt='ls -l --sort=time'
 alias lh='ls -ld ~/.[^.]*'
 alias lst='lsd -lt'
@@ -83,6 +95,8 @@ alias upgrade='sudo apt update -y && sudo apt upgrade -y'
 alias dcls='docker container ls'
 alias dcs='docker container stop'
 alias dl='docker logs --follow'
+# get running container volumes
+alias dvi='docker inspect --format="{{.Mounts}}"'
 alias docker-enter='docker-compose run --rm --service-ports app /bin/bash'
 alias docker-enter-again='docker-compose run --rm app /bin/bash'
 alias docker-clean-images='sudo docker rmi $(sudo docker images -a --filter=dangling=true -q)'
@@ -98,6 +112,8 @@ alias lsof-netproc='lsof -Pan -i'
 alias pg='ping google.com'
 alias netman-restart='sudo systemctl restart NetworkManager'
 alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias netstat:tcp="netstat -tap"
+alias netstat:tcpip="netstat -tapn"
 
 # Vim
 alias lswp='ls .*.*.sw*'
@@ -127,16 +143,22 @@ alias mmb="~/scripts/mmb_paste-disable.sh"
 alias myApps="apt search '~i!~M'"
 
 # Utils
-alias truffle-local="./node_modules/.bin/truffle"
-alias ganache-local="./node_modules/.bin/ganache-cli"
+alias ncdu='ncdu --confirm-quit --color dark'
 alias wpscan='sudo docker run -it --rm wpscanteam/wpscan'
 alias fuck='sudo $(history -p \!\!)'
 alias cpuf="grep -E '^model name|^cpu MHz' /proc/cpuinfo"
 alias stress='for j in `seq 1 4`; do dd if=/dev/zero of=/dev/null & done'
 alias stress-stop='killall dd'
+qr() { qrencode "$1" -t ANSIUTF8 -o -; }
 
 # Apps
 alias ncspot="RUST_BACKTRACE=1 ncspot"
 
+# Ethereum
+alias truffle-local="./node_modules/.bin/truffle"
+alias ganache-local="./node_modules/.bin/ganache-cli"
+
+# tmp
+export PATH="$PATH:$HOME/.local/bin"
 
 

@@ -18,4 +18,4 @@ apt install -y build-essential
 apt install -y tilix dconf-cli meld
 
 # Accessories
-apt install -y drawing
+apt install -y drawing qrencode

@@ -48,8 +48,8 @@ nmap <silent> gh :echo 'hi<'.synIDattr(synID(line('.'), col('.'), 1), 'name')
 autocmd Filetype python setlocal ts=4 sts=4 sw=4
 autocmd Filetype cpp setlocal tabstop=4 shiftwidth=0 softtabstop=4
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
-autocmd Filetype sh setlocal ts=2 sts=2 sw=2
-autocmd Filetype bash setlocal ts=2 sts=2 sw=2
+"autocmd Filetype sh setlocal ts=2 sts=2 sw=2
+"autocmd Filetype bash setlocal ts=2 sts=2 sw=2
 autocmd Filetype json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype solidity setlocal ts=4 sts=4 sw=4
@@ -202,6 +202,27 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+" Install missing extensions on startup
+let g:coc_global_extensions = [
+\ 'coc-rls',
+\ 'coc-rust-analyzer',
+\ 'coc-tsserver',
+\ 'coc-sh',
+\ 'coc-tabnine',
+\ 'coc-prettier',
+\ 'coc-markdownlint',
+\ 'coc-json',
+\ 'coc-highlight',
+\ 'coc-go',
+\ 'coc-git',
+\ ]
+" \ 'coc-ultisnips',
+" \ 'coc-json',
+" \ 'coc-html',
+" \ 'coc-css',
+" \ 'coc-yaml',
+" \ 'coc-highlight',
+
 " ++++++++++++++++ fzf
 
 " ++++++++++++++++ Airline
@@ -226,9 +247,8 @@ let g:airline_powerline_fonts = 1
 
 "let g:airline#extensions#tabline#ignore_bufadd_pat = 'nerd_tree|undotree|vimfiler|NERD_tree'
 
-"let g:airline#extensions#tabline#keymap_ignored_filetypes =
-        \ ['vimfiler', 'nerdtree', 'qf', 'vim-plug', 'help', 'diff', 'man', 'fugitive', 'nerdtree', 'tagbar', 'codi']
-
+let g:airline#extensions#tabline#keymap_ignored_filetypes =
+        \ ['vimfiler', 'nerdtree', 'NERD_tree', 'NERD_tree_*', 'qf', 'vim-plug', 'help', 'diff', 'man', 'fugitive', 'nerdtree', 'tagbar', 'codi']
 
 " Truncate / format long branch names
 " to truncate all path sections but the last one, e.g. a branch 'foo/bar/baz' becomes 'f/b/baz', use 2
@@ -236,26 +256,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#format = 2
 let g:airline#extensions#branch#empty_message = 'NO GIT'
-
-
-" ++++++++++++++++ CoC
-let g:coc_global_extensions = [
-\ 'coc-tsserver'
-\ 'coc-sh'
-\ 'coc-tabnine'
-\ 'coc-prettier'
-\ 'coc-markdownlint'
-\ 'coc-json'
-\ 'coc-highlight'
-\ 'coc-go'
-\ 'coc-git'
-" \ 'coc-ultisnips',
-" \ 'coc-json',
-" \ 'coc-html',
-" \ 'coc-css',
-" \ 'coc-yaml',
-" \ 'coc-highlight',
-\ ]
 
 " ---------- Theme
 "  +++ One Dark (see README.md)
@@ -278,6 +278,16 @@ set conceallevel=3
 
 " ++++++++++++++++ Suda
 let g:suda_smart_edit = 1 " Automatically open write protected files using suda
+
+" ++++++++++++++++ LogNroll
+" !!!! Replace this plugin with something that doesn't rely on map instead of noremap
+let g:lognroll#enable_brackets = 1
+let g:lognroll#enable_insert_mode = 0
+" iunmap col
+" nunmap col
+nmap tcl <Plug>(lnr_insert_log) 
+nmap tcl <Plug>(lnr_normal_log) 
+" inoremap tcl <Plug>(lnr_insert_log)
 
 " ++++++++++++++++ Plugged
 " Automatically install plugged
@@ -302,7 +312,7 @@ Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'moll/vim-bbye'
 
 " ------  Utilities
-Plug 'lambalisue/suda'
+Plug 'lambdalisue/suda.vim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " ------ Text Manipulation
@@ -312,12 +322,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary' 
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'kkoomen/vim-doge'
+Plug 'glippi/lognroll-vim'
 
 " ------ Linting and Completion
 "Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release' , 'do': 'yarn install --frozen-lockfile'}
-" :CocInstall coc-json
-" :CocInstall coc-tsserver
 
 " ------ Syntax
 Plug 'norcalli/nvim-colorizer.lua'
