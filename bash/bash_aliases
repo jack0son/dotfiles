@@ -1,10 +1,16 @@
 # -- Project shortcuts --
+alias wact='cd  $HOME/Repositories/jack0son/wact'
+alias axelar='cd $HOME/Repositories/axelarnetwork/axelar-core'
+alias axelarate='cd $HOME/Repositories/axelarnetwork/axelarate'
+alias sendee='cd  $HOME/Repositories/jack0son/web3-sendee'
+
 WOKE_DAPP="$HOME/Repositories/jack0son/woke-dapp"
 alias woke='cd $WOKE_DAPP'
 alias woke-app='cd $WOKE_DAPP/app'
 alias woke:build='$WOKE_DAPP/scripts/build.sh'
 alias woke:deploy='$WOKE_DAPP/scripts/deploy.sh'
 alias woke:migrate='$WOKE_DAPP/@woke/contracts-src/scripts/migrate.sh'
+alias woke:unstage-contracts='git checkout $WOKE_DAPP/@woke/app/src/contracts/development/UserRegistry.json $WOKE_DAPP/@woke/app/src/contracts/development/TwitterOracleMock.json $WOKE_DAPP/@woke/app/src/contracts/development/WokeToken.json'
 alias contracts='cd ~/Repositories/jack0son/woke-dapp/@woke/contracts-src'
 alias dotfiles='cd ~/Repositories/jack0son/dotfiles'
 
@@ -51,8 +57,8 @@ alias duh='du -h'
 # Directory aliases
 alias dt='cd ~/Desktop'
 alias dl='cd ~/Downloads'
-alias gosrc='cd ~/go/src/github.com/jack0son'
 alias repos='cd ~/Repositories'
+alias gosrc='cd ~/go/src/github.com/jack0son'
 alias sandbox='cd ~/Repositories/sandbox'
 alias github='cd ~/Repositories/github'
 alias jack0son='cd ~/Repositories/jack0son'
@@ -144,11 +150,13 @@ alias myApps="apt search '~i!~M'"
 
 # Utils
 alias ncdu='ncdu --confirm-quit --color dark'
+alias namekill='sudo kill -9 $(ps -A | grep $1 | cut -d' ' -f-3)'
 alias wpscan='sudo docker run -it --rm wpscanteam/wpscan'
 alias fuck='sudo $(history -p \!\!)'
 alias cpuf="grep -E '^model name|^cpu MHz' /proc/cpuinfo"
 alias stress='for j in `seq 1 4`; do dd if=/dev/zero of=/dev/null & done'
 alias stress-stop='killall dd'
+alias procusers='ps -Af | cut -f1 -d' ' | sort | uniq'
 qr() { qrencode "$1" -t ANSIUTF8 -o -; }
 
 # Apps
