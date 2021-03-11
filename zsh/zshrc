@@ -1,8 +1,7 @@
+source ~/.zshpath
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
-# Path to your oh-my-zsh installation.
-export ZSH="/home/jack/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -38,7 +37,7 @@ ZSH_THEME="agnoster"
 # DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+DISABLE_LS_COLORS="false"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -126,16 +125,6 @@ export KEYTIMEOUT=30
 
 # VI mode prompt
 # Updates editor information when the keymap changes.
-function zle-keymap-select() {
-  zle reset-prompt
-  zle -R
-}
-
-zle -N zle-keymap-select
-
-function vi_mode_prompt_info() {
-  echo "${${KEYMAP/vicmd/[% NORMAL]%}/(main|viins)/[% INSERT]%}"
-}
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
@@ -143,22 +132,37 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 # Fix working dir inheritance on tilix https://gnunn1.github.io/tilix-web/manual/vteconfig/
 # ln -s /etc/profile.d/vte-2.91.sh /etc/profile.d/vte.sh
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-        source /etc/profile.d/vte-2.91.sh
+	source /etc/profile.d/vte-2.91.sh
 fi
 
-# define right prompt, regardless of whether the theme defined it
-RPS1='$(vi_mode_prompt_info)'
-RPS2=$RPS1
+if [[ -z $(which starship) ]]; then
+	function zle-keymap-select() {
+		zle reset-prompt
+		zle -R
+	}
 
-autocrlf=false
+	zle -N zle-keymap-select
 
-# New line at end of prompt
-prompt_end() {
-  if [[ -n $CURRENT_BG ]]; then
-    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
-  else
-    echo -n "%{%k%}"
-  fi
-  echo -n "\n%{%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{%f%}"
-  CURRENT_BG=''
-}
+	function vi_mode_prompt_info() {
+		echo "${${KEYMAP/vicmd/[% NORMAL]%}/(main|viins)/[% INSERT]%}"
+	}
+	# define right prompt, regardless of whether the theme defined it
+	RPS1='$(vi_mode_prompt_info)'
+	RPS2=$RPS1
+
+	# New line at end of prompt
+	prompt_end() {
+		if [[ -n $CURRENT_BG ]]; then
+			echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+		else
+			echo -n "%{%k%}"
+		fi
+		echo -n "\n%{%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{%f%}"
+		CURRENT_BG=''
+	}
+	
+	autocrlf=false
+else
+	eval "$(starship init zsh)"
+fi
+
